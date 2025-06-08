@@ -17,5 +17,6 @@ int desenfileirar(StaticQueue *q, Registro *r);
 int filaVazia(StaticQueue *q);
 int filaCheia(StaticQueue *q);
 void imprimirStaticQueue(StaticQueue *q);
+void salvarStaticQueueEmArquivo(StaticQueue *q, const char *nomeArquivo);
 
 #endif

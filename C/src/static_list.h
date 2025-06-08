@@ -13,5 +13,6 @@ void inicializarStaticList(StaticList *l);
 int inserirFinalStatic(StaticList *l, Registro r);
 int removerValorStatic(StaticList *l, int valor);
 void imprimirStaticList(StaticList *l);
+void salvarStaticListEmArquivo(StaticList *l, const char *nomeArquivo);
 
 #endif

@@ -31,3 +31,17 @@ void imprimirStaticList(StaticList *l) {
     }
     printf("\n");
 }
+
+void salvarStaticListEmArquivo(StaticList *l, const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "w");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo para escrita");
+        return;
+    }
+
+    for (int i = 0; i < l->tamanho; i++) {
+        fprintf(arquivo, "%d \n", l->itens[i].valor);
+    }
+
+    fclose(arquivo);
+}

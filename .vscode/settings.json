@@ -4,6 +4,9 @@
         "file_reader.h": "c",
         "stdio.h": "c",
         "dynamic_list.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "static_stack.h": "c",
+        "tim_sort.h": "c",
+        "static_queue.h": "c"
     }
 }

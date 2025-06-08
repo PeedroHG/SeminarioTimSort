@@ -46,3 +46,19 @@ void imprimirStaticQueue(StaticQueue *q) {
     }
     printf("\n");
 }
+
+void salvarStaticQueueEmArquivo(StaticQueue *q, const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "w");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo para escrita");
+        return;
+    }
+
+    int i = q->frente;
+    for (int count = 0; count < q->tamanho; count++) {
+        fprintf(arquivo, "%d\n", q->dados[i].valor);
+        i = (i + 1) % MAXTAM;
+    }
+
+    fclose(arquivo);
+}

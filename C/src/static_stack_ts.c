@@ -3,19 +3,26 @@
 #include "file_reader.h"
 #include "tim_sort.h"
 
-int main() {
+#define INPUT_FILE "../Samples/sample_100.csv"
+#define OUTPUT_FILE "./ordened/static_stack/sample_100.csv"
+
+int main()
+{
     StaticStack pilha;
     inicializarStaticStack(&pilha);
 
-    if (carregarCSVparaStaticStack("../Samples/sample_1000000.csv", &pilha)) {
+    if (carregarCSVparaStaticStack(INPUT_FILE, &pilha))
+    {
         printf("Dados carregados na StaticStack:\n");
-        imprimirStaticStack(&pilha);
 
         ordenarStaticStack(&pilha);
 
-        printf("\nDados ordenados na StaticStack:\n");
-        imprimirStaticStack(&pilha);
-    } else {
+        printf("\nDados ordenados:\n");
+
+        salvarStaticListEmArquivo(&pilha, OUTPUT_FILE);
+    }
+    else
+    {
         printf("Falha ao carregar dados do arquivo.\n");
     }
 

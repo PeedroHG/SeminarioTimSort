@@ -15,5 +15,6 @@ int desempilhar(StaticStack *s, Registro *r);
 int pilhaVazia(StaticStack *s);
 int pilhaCheia(StaticStack *s);
 void imprimirStaticStack(StaticStack *s);
+void salvarStaticStackEmArquivo(StaticStack *s, const char *nomeArquivo);
 
 #endif

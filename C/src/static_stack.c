@@ -39,3 +39,16 @@ void imprimirStaticStack(StaticStack *s) {
     printf("\n");
 }
 
+void salvarStaticStackEmArquivo(StaticStack *s, const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "w");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo para escrita");
+        return;
+    }
+
+    for (int i = s->topo; i >= 0; i--) {
+        fprintf(arquivo, "%d\n", s->dados[i].valor);
+    }
+
+    fclose(arquivo);
+}
