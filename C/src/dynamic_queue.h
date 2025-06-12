@@ -1,21 +1,19 @@
 #ifndef DYNAMIC_QUEUE_H
 #define DYNAMIC_QUEUE_H
 
-#include "registro.h"
-#include <stdlib.h>
+#include "node.h"
 
 typedef struct {
-    Registro* itens;
-    int tamanho;
-    int capacidade;
-    int frente;
-    int tras;
+    No *head;
+    No *tail;
+    int size;
 } DynamicQueue;
 
-void inicializarDynamicQueue(DynamicQueue* q);
-int inserirDynamicQueue(DynamicQueue* q, Registro r);
-int removerDynamicQueue(DynamicQueue* q, Registro* r);
-void imprimirDynamicQueue(DynamicQueue* q);
-void salvarDynamicQueueEmArquivo(DynamicQueue* q, const char *nomeArquivo);
+void inicializarDynamicQueue(DynamicQueue *queue);
+int enfileirarDynamicQueue(DynamicQueue *queue, Registro valor);
+int desenfileirarDynamicQueue(DynamicQueue *queue, Registro *valor);
+int filaVaziaDynamicQueue(DynamicQueue *queue);
+void imprimirDynamicQueue(DynamicQueue *queue);
+void salvarDynamicQueueEmArquivo(DynamicQueue *queue, const char *nomeArquivo);
 
 #endif

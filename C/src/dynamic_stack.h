@@ -1,19 +1,17 @@
 #ifndef DYNAMIC_STACK_H
 #define DYNAMIC_STACK_H
 
-#include "registro.h"
-#include <stdlib.h>
+#include "node.h"
 
 typedef struct {
-    Registro* itens;
-    int tamanho;
-    int capacidade;
+    No *topo;
+    int size;
 } DynamicStack;
 
-void inicializarDynamicStack(DynamicStack* s);
-int pushDynamicStack(DynamicStack* s, Registro r);
-int popDynamicStack(DynamicStack* s, Registro* r);
-void imprimirDynamicStack(DynamicStack* s);
-void salvarDynamicStackEmArquivo(DynamicStack* s, const char *nomeArquivo);
-
+void inicializarDynamicStack(DynamicStack *stack);
+int empilharDynamicStack(DynamicStack *stack, Registro valor);
+int desempilharDynamicStack(DynamicStack *stack, Registro *valor);
+int pilhaVaziaDynamicStack(DynamicStack *stack);
+void imprimirDynamicStack(DynamicStack *stack);
+void salvarDynamicStackEmArquivo(DynamicStack *stack, const char *nomeArquivo);
 #endif

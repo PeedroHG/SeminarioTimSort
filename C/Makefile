@@ -1,28 +1,40 @@
 CC = gcc
 CFLAGS = -I src -Wall -Wextra -O2
 
-SRCS = src/static_list.c src/static_queue.c src/static_stack.c src/file_reader.c src/tim_sort.c
+# Fontes principais compartilhadas
+SRCS = src/dynamic_list.c src/dynamic_stack.c src/dynamic_queue.c src/static_list.c src/static_queue.c src/static_stack.c src/file_reader.c src/tim_sort.c
 
-# Executáveis
-TARGETS = static_list_ts static_queue_ts static_stack_ts
+# Alvos disponíveis
+TARGETS = dynamic_list_ts dynamic_stack_ts dynamic_queue_ts static_list_ts static_queue_ts static_stack_ts
 
-# Dependências dos sources para cada target (basicamente os mesmos)
-STATIC_LIST_TS_SRCS = src/static_list_ts.c $(SRCS)
-STATIC_QUEUE_TS_SRCS = src/static_queue_ts.c $(SRCS)
-STATIC_STACK_TS_SRCS = src/static_stack_ts.c $(SRCS)
-
+# Regras principais
 all: $(TARGETS)
 
-static_list_ts: $(STATIC_LIST_TS_SRCS)
+dynamic_list_ts: src/dynamic_list_ts.c $(SRCS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-static_queue_ts: $(STATIC_QUEUE_TS_SRCS)
+dynamic_stack_ts: src/dynamic_stack_ts.c $(SRCS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-static_stack_ts: $(STATIC_STACK_TS_SRCS)
+dynamic_queue_ts: src/dynamic_queue_ts.c $(SRCS)
 	$(CC) $(CFLAGS) -o $@ $^
 
+static_list_ts: src/static_list_ts.c $(SRCS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+static_queue_ts: src/static_queue_ts.c $(SRCS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+static_stack_ts: src/static_stack_ts.c $(SRCS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Alvos específicos
+stack: dynamic_stack_ts static_stack_ts
+queue: dynamic_queue_ts static_queue_ts
+list: dynamic_list_ts static_list_ts
+
+# Limpar binários
 clean:
 	rm -f $(TARGETS) *.o
 
-.PHONY:
+.PHONY: all clean stack queue list

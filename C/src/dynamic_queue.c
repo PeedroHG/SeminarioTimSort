@@ -1,54 +1,71 @@
-#include "dynamic_queue.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "dynamic_queue.h"
 
-void inicializarDynamicQueue(DynamicQueue* q) {
-    q->tamanho = 0;
-    q->capacidade = 10; // capacidade inicial
-    q->itens = (Registro*) malloc(q->capacidade * sizeof(Registro));
-    q->frente = 0;
-    q->tras = 0;
+void inicializarDynamicQueue(DynamicQueue *queue) {
+    queue->head = NULL;
+    queue->tail = NULL;
+    queue->size = 0;
 }
 
-int inserirDynamicQueue(DynamicQueue* q, Registro r) {
-    if (q->tamanho >= q->capacidade) {
-        // aumentar a capacidade da fila
-        q->capacidade *= 2;
-        q->itens = (Registro*) realloc(q->itens, q->capacidade * sizeof(Registro));
+int enfileirarDynamicQueue(DynamicQueue *queue, Registro valor) {
+    No *novo = (No*) malloc(sizeof(No));
+    if (!novo) return 0;
+
+    novo->valor = valor;
+    novo->prox = NULL;
+
+    if (queue->tail == NULL) {
+        queue->head = novo;
+        queue->tail = novo;
+    } else {
+        queue->tail->prox = novo;
+        queue->tail = novo;
     }
-    q->itens[q->tras] = r;
-    q->tras = (q->tras + 1) % q->capacidade;
-    q->tamanho++;
+
+    queue->size++;
     return 1;
 }
 
-int removerDynamicQueue(DynamicQueue* q, Registro* r) {
-    if (q->tamanho == 0) return 0;
-    *r = q->itens[q->frente];
-    q->frente = (q->frente + 1) % q->capacidade;
-    q->tamanho--;
+int desenfileirarDynamicQueue(DynamicQueue *queue, Registro *valor) {
+    if (filaVazia(queue)) return 0;
+
+    No *remover = queue->head;
+    *valor = remover->valor;
+    queue->head = remover->prox;
+    if (queue->head == NULL)
+        queue->tail = NULL;
+
+    free(remover);
+    queue->size--;
     return 1;
 }
 
-void imprimirDynamicQueue(DynamicQueue* q) {
-    int i = q->frente;
-    for (int j = 0; j < q->tamanho; j++) {
-        printf("%d ", q->itens[i].valor);
-        i = (i + 1) % q->capacidade;
+int filaVaziaDynamicQueue(DynamicQueue *queue) {
+    return queue->size == 0;
+}
+
+void imprimirDynamicQueue(DynamicQueue *queue) {
+    No *atual = queue->head;
+    while (atual != NULL) {
+        printf("%d ", atual->valor.valor);
+        atual = atual->prox;
     }
     printf("\n");
 }
 
-void salvarDynamicQueueEmArquivo(DynamicQueue* q, const char *nomeArquivo) {
-    FILE *fp = fopen(nomeArquivo, "w");
-    if (fp == NULL) {
-        printf("Erro ao abrir o arquivo\n");
+void salvarDynamicQueueEmArquivo(DynamicQueue *queue, const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "w");
+    if (!arquivo) {
+        perror("Erro ao abrir arquivo para escrita");
         return;
     }
-    int i = q->frente;
-    for (int j = 0; j < q->tamanho; j++) {
-        fprintf(fp, "%d\n", q->itens[i].valor);
-        i = (i + 1) % q->capacidade;
+
+    No *atual = queue->head;
+    while (atual != NULL) {
+        fprintf(arquivo, "%d\n", atual->valor.valor);
+        atual = atual->prox;
     }
-    fclose(fp);
+
+    fclose(arquivo);
 }

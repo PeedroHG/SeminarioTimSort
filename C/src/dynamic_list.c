@@ -1,51 +1,67 @@
-#include "dynamic_list.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "dynamic_list.h"
 
-void inicializarDynamicList(DynamicList* l) {
-    l->tamanho = 0;
-    l->capacidade = 10; // capacidade inicial
-    l->itens = (Registro*) malloc(l->capacidade * sizeof(Registro));
+void inicializarDynamicList(DynamicList* list) {
+    list->head = NULL;
+    list->tail = NULL;
+    list->size = 0;
 }
 
-int inserirFinalDynamic(DynamicList* l, Registro r) {
-    if (l->tamanho >= l->capacidade) {
-        // aumentar a capacidade da lista
-        l->capacidade *= 2;
-        l->itens = (Registro*) realloc(l->itens, l->capacidade * sizeof(Registro));
+int inserirFimDynamicList(DynamicList* list, Registro valor) {
+    No* novo = (No*) malloc(sizeof(No));
+    if (!novo) return 0; // falha na alocação de memória
+
+    novo->valor = valor;
+    novo->prox = NULL;
+
+    if (list->tail == NULL) {
+        list->head = novo;
+        list->tail = novo;
+    } else {
+        list->tail->prox = novo;
+        list->tail = novo;
     }
-    l->itens[l->tamanho++] = r;
+
+    list->size++;
     return 1;
 }
 
-int removerValorDynamic(DynamicList* l, int valor) {
-    for (int i = 0; i < l->tamanho; i++) {
-        if (l->itens[i].valor == valor) {
-            for (int j = i; j < l->tamanho - 1; j++) {
-                l->itens[j] = l->itens[j + 1];
-            }
-            l->tamanho--;
-            return 1;
-        }
+int removerInicioDynamicList(DynamicList* list, Registro* valor) {
+    if (list->head == NULL) return 0; // lista vazia
+
+    *valor = list->head->valor;
+    No* temp = list->head;
+    list->head = list->head->prox;
+
+    if (list->head == NULL) {
+        list->tail = NULL;
     }
-    return 0;
+
+    free(temp);
+    list->size--;
+    return 1;
 }
 
-void imprimirDynamicList(DynamicList* l) {
-    for (int i = 0; i < l->tamanho; i++) {
-        printf("%d ", l->itens[i].valor);
+void imprimirDynamicList(DynamicList* list) {
+    No* current = list->head;
+    while (current != NULL) {
+        printf("%d ", current->valor.valor);
+        current = current->prox;
     }
     printf("\n");
 }
 
-void salvarDynamicListEmArquivo(DynamicList* l, const char *nomeArquivo) {
-    FILE *fp = fopen(nomeArquivo, "w");
-    if (fp == NULL) {
-        printf("Erro ao abrir o arquivo\n");
+void salvarDynamicListEmArquivo(DynamicList* list, const char *nomeArquivo) {
+    FILE *arquivo = fopen(nomeArquivo, "w");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo para escrita");
         return;
     }
-    for (int i = 0; i < l->tamanho; i++) {
-        fprintf(fp, "%d\n", l->itens[i].valor);
+
+    for (No* current = list->head; current != NULL; current = current->prox) {
+        fprintf(arquivo, "%d \n", current->valor.valor);
     }
-    fclose(fp);
+
+    fclose(arquivo);
 }
