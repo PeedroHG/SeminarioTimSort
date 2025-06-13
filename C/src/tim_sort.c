@@ -152,19 +152,20 @@ void ordenarDynamicList(DynamicList *l)
         if (!arr)
             return;
 
-        for (int i = 0; i < l->size; i++)
+        No *aux = l->head;
+        for (int i = 0; i < l->size && aux != NULL; i++)
         {
-            arr[i] = l->head->valor.valor;
-            l->head = l->head->prox;
+            arr[i] = aux->valor.valor;
+            aux = aux->prox;
         }
 
         timsort(arr, l->size);
 
-        No *atual = l->head;
-        for (int i = 0; i < l->size && atual != NULL; i++)
+        aux = l->head;
+        for (int i = 0; i < l->size && aux != NULL; i++)
         {
-            atual->valor.valor = arr[i];
-            atual = atual->prox;
+            aux->valor.valor = arr[i];
+            aux = aux->prox;
         }
 
         free(arr);

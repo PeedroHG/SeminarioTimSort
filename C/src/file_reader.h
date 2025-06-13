@@ -9,6 +9,8 @@
 #include "dynamic_queue.h"
 #include "dynamic_stack.h"
 
+int carregarCVS(const char *filename, int *arr, int n);
+
 int carregarCSVparaStaticList(const char *filename, StaticList *lista);
 int carregarCSVparaStaticQueue(const char *filename, StaticQueue *fila);
 int carregarCSVparaStaticStack(const char *filename, StaticStack *pilha);
