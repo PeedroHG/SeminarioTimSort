@@ -1,30 +1,38 @@
 #include <stdio.h>
+#include <time.h>
 #include "static_list.h"
 #include "file_reader.h"
 #include "tim_sort.h"
 
-#define INPUT_FILE "../Samples/sample_100.csv"
-#define OUTPUT_FILE "./ordened/static_list/sample_100.csv"
+#define INPUT_FILE "../Samples/sample_1000000.csv"
+#define OUTPUT_FILE "./ordened/static_list/sample_1000000.csv"
+#define TAMANHO 1000000
 
 int main()
 {
     StaticList lista;
     inicializarStaticList(&lista);
 
-    if (carregarCSVparaStaticList(INPUT_FILE, &lista))
+    int arr[TAMANHO];
+    carregarCVS(INPUT_FILE, arr, TAMANHO);
+    printf("Dados carregados\n");
+
+    clock_t inicio, fim;
+    inicio = clock();
+
+    Registro r;
+    for (int i = 0; i < TAMANHO; i++)
     {
-        printf("Dados carregados na StaticList:\n");
-
-        ordenarStaticList(&lista);
-
-        printf("Dados ordenados:\n");
-
-        salvarStaticListEmArquivo(&lista, OUTPUT_FILE);
-    }
-    else
-    {
-        printf("Falha ao carregar dados do arquivo.\n");
+        r.valor = arr[i];
+        inserirFinalStatic(&lista, r);
     }
 
+    ordenarStaticList(&lista);
+
+    fim = clock();
+    double tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo de execução: %f segundos\n", tempo);
+
+    salvarStaticListEmArquivo(&lista, OUTPUT_FILE);
     return 0;
 }
