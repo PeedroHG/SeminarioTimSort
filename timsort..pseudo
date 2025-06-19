@@ -1,0 +1,39 @@
+function insertionSort(arr, start, end) do
+    for i = start + 1 to end do
+        set key = arr[i]
+        set j = i - 1
+        while j >= start and arr[j] > key do
+            set arr[j + 1] = arr[j]
+            set j = j - 1
+        end
+        set arr[j + 1] = key
+    end
+end
+
+function merge(arr, left, mid, right) do
+    # Junta dois subarrays ordenados arr[left..mid] e arr[mid+1..right]
+    # (abstraído, sem detalhes)
+end
+
+function timSort(arr, n) do
+    set RUN = 32
+
+    // Divide o array em blocos pequenos e ordena com insertionSort
+    for i = 0 to n - 1 step RUN do
+        insertionSort(arr, i, min(i + RUN - 1, n - 1))
+    end
+
+    //Vai unindo esses blocos pequenos em blocos maiores, ate ordenar tudo
+    set size = RUN
+    while size < n do
+        for left = 0 to n - 1 step size * 2 do
+            set mid = left + size - 1
+            set right = min(left + 2 * size - 1, n - 1)
+
+            if mid < right do
+                merge(arr, left, mid, right)
+            end
+        end
+        set size = size * 2
+    end
+end

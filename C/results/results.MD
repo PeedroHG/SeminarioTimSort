@@ -60,4 +60,3 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 | 10K             | 0.000534        | 1792                   |
 | 100K            | 0.006553        | 3072                   |
 | 1M              | 0.078459        | 16904                  |
-

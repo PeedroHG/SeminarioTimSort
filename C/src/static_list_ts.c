@@ -4,8 +4,8 @@
 #include "file_reader.h"
 #include "tim_sort.h"
 
-#define INPUT_FILE "../Samples/sample_1000000.csv"
-#define OUTPUT_FILE "./ordened/static_list/sample_1000000.csv"
+#define INPUT_FILE "../SamplesR/amostra_100000.csv"
+#define OUTPUT_FILE "./ordened/static_list_ratings/sample_1000000.csv"
 #define TAMANHO 1000000
 
 int main()
