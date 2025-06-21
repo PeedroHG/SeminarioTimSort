@@ -46,5 +46,12 @@ public class StaticList {
             System.err.println("Erro ao abrir o arquivo para escrita: " + e.getMessage());
         }
     }
+
+    public void clear() {
+    for (int i = 0; i < tamanho; i++) {
+        elementos[i] = null;
+    }
+    tamanho = 0;
+}
 }
 
