@@ -7,6 +7,12 @@
         "stdlib.h": "c",
         "static_stack.h": "c",
         "tim_sort.h": "c",
-        "static_queue.h": "c"
+        "static_queue.h": "c",
+        "iosfwd": "cpp",
+        "ostream": "cpp",
+        "stdexcept": "cpp",
+        "chrono": "cpp",
+        "iostream": "cpp",
+        "iomanip": "cpp"
     }
 }
