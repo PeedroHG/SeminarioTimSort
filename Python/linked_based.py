@@ -1,3 +1,5 @@
+import csv
+
 class Node:
     def __init__(self, data):
         self.data = data
@@ -52,6 +54,19 @@ class LinkedList:
         self._size = 0
         for data in data_list:
             self.append(data)
+
+    def clear(self):
+        self.head = None
+        self.tail = None  # Reset tail
+        self._size = 0
+
+    def save_to_csv(self, filename):
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            current = self.head
+            while current:
+                writer.writerow([current.data])
+                current = current.next
 
 class LinkedQueue(LinkedList):
     def enqueue(self, data):

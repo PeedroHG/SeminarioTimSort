@@ -31,6 +31,7 @@ class ArrayList:
         self._data = []
 
     def save_to_csv(self, filename):
+        print(f"Salvando dados em {filename}")
         with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows([[x] for x in self._data])
