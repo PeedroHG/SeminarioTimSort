@@ -1,4 +1,8 @@
 Samples/
 PreProcessing/
-venv/
 C/ordened
+Cpp/ordened
+Java/ordened
+Python/ordened
+Python/venv
+Python/__pycache__

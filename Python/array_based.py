@@ -1,3 +1,5 @@
+import csv
+
 class ArrayList:
     def __init__(self):
         self._data = []
@@ -24,6 +26,15 @@ class ArrayList:
 
     def from_list(self, data_list):
         self._data = list(data_list)
+
+    def clear(self):
+        self._data = []
+
+    def save_to_csv(self, filename):
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerows([[x] for x in self._data])
+
 
 class ArrayQueue(ArrayList):
     def enqueue(self, item):
