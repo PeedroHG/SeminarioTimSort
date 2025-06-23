@@ -52,7 +52,7 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 | 100K            | 0.044791         | 72004                    |
 | 1M              | 0.233588         | 237165                   |
 
-### **static_queue**
+### **static_stack**
 | Volume de Dados | Tempo Total (s) | Memória Máxima (kbytes) |
 |-----------------|-----------------|------------------------|
 | 100             | 0.000227         | 44120                    |

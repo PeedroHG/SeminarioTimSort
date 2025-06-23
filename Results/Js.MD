@@ -31,7 +31,7 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 | 1K              | 0.009042          | 46499                     |
 | 10K             | 0.021998          | 50036                     |
 | 100K            | 0.084912          | 98970                     |
-| 1M              | 0.819633          | 23158                    |
+| 1M              | 0.819633          | 232158                    |
 
 
 ## Estruturas Staticas
