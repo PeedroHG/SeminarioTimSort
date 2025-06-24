@@ -1,5 +1,6 @@
 Samples/
-PreProcessing/
+SamplesPartialOrdened/
+PreProcess/venv
 C/ordened
 Cpp/ordened
 Java/ordened

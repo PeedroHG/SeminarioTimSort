@@ -17,27 +17,27 @@ def ler_timestamps_csv(nome_arquivo):
     return timestamps
 
 # le o csv
-timestamps = ler_timestamps_csv('../Samples/sample_'+ str(tam) + '.csv')
+timestamps = ler_timestamps_csv('../SamplesPartialOrdened/sample_'+ str(tam) + '.csv')
 
-linked_stack = LinkedStack()
+linked_list = LinkedList()
 
 # COMEÇA A CONTAR O TEMPO AQUI
 start = time.perf_counter()
 
 # passa pra estrutura
 for t in timestamps:
-    linked_stack.push(t)
+    linked_list.append(t)
 
 # transforma em array normal
-normal_list = linked_stack.to_list()
+normal_list = linked_list.to_list()
 
 # ordena
 timsort(normal_list)
 
 # limpa a estrutura e copia ordenado
-linked_stack.clear()
+linked_list.clear()
 for t in normal_list:
-    linked_stack.push(t)
+    linked_list.append(t)
 
 # TERMINA DE CONTAR O TEMPO AQUI
 end = time.perf_counter()
@@ -47,4 +47,4 @@ tempo_execucao = end - start
 print(f"Tempo de execução: {tempo_execucao:.6f} segundos")
 
 # salva o resultado num CSV
-linked_stack.save_to_csv('./ordened/dynamic_stack/sample_' + str(tam) + '.csv')
+linked_list.save_to_csv('./ordened/dynamic_stack/sample_' + str(tam) + '.csv')

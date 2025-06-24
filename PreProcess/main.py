@@ -1,4 +1,5 @@
 import csv
+import random
 
 def gerar_amostras_timestamp(arquivo_entrada):
     tamanhos = [100, 1000, 10000, 100000, 1000000]
@@ -41,5 +42,36 @@ def gerar_amostras_timestamp(arquivo_entrada):
 
     print(f"[✓] Amostras de timestamp geradas até {contador} registros.")
 
+
+def gerar_amostras_inteiros_parcialmente_ordenados():
+    tamanhos = [100, 1000, 10000, 100000, 1000000]
+    porcentagem_desordenada = 0.2  # Porcentagem que será embaralhada
+
+    for tamanho in tamanhos:
+        # Gerar lista ordenada
+        numeros = list(range(1, tamanho + 1))
+
+        # Descobre quantos elementos embaralhar
+        qtd_desordenada = int(tamanho * porcentagem_desordenada)
+
+        # Selecionar índice inicial para embaralhar
+        inicio = random.randint(0, tamanho - qtd_desordenada)
+        fim = inicio + qtd_desordenada
+
+        # Embaralhar apenas o trecho selecionado
+        trecho = numeros[inicio:fim]
+        random.shuffle(trecho)
+        numeros[inicio:fim] = trecho
+
+        # Salvar no CSV
+        with open(f"sample_{tamanho}.csv", 'w', newline='', encoding='utf-8') as f_out:
+            writer = csv.writer(f_out)
+            writer.writerow(["valor"])  # cabeçalho
+            for num in numeros:
+                writer.writerow([num])
+
+        print(f"[✓] Amostra parcialmente ordenada gerada: sample_parcialmente_ordenado_{tamanho}.csv")
+
+
 # Exemplo de uso
-gerar_amostras_timestamp("ratings.csv")
+gerar_amostras_inteiros_parcialmente_ordenados()
