@@ -18,7 +18,7 @@ dados = pd.DataFrame({
     )
 })
 
-sns.set_theme(style="whitegrid")
+sns.set_theme(style="dark")
 plt.figure(figsize=(10,6))
 sns.lineplot(data=dados, x="Volume", y="Tempo (s)", hue="Cenário", marker="o")
 plt.xscale('log')
