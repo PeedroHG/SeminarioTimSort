@@ -1,4 +1,4 @@
-Cpp,,,,,,,,,,,,,,
+C++,,,,,,,,,,,,,,
 Volume,dynamic_list,dynamic_queue,dynamic_stack,static_list,static_queue,static_stack,,Volume,dynamic_list,dynamic_queue,dynamic_stack,static_list,static_queue,static_stack
 100,0.000011,0.000011,0.000012,0.000004,0.000005,0.000004,,100,3840,3840,3827,3827,3840,3827
 1K,0.000128,0.000127,0.000111,0.000049,0.000054,0.000045,,1K,3878,3878,3853,3827,3827,3840
@@ -30,7 +30,7 @@ Volume,dynamic_list,dynamic_queue,dynamic_stack,static_list,static_queue,static_
 100K,0.650361,0.652316,0.628269,0.554700,0.574234,0.556504,,100K,24669,24651,24620,25206,25195,25184
 1M,6.938603,6.661681,6.895984,5.223232,5.163898,5.473893,,1M,147862,147962,147893,155361,155331,155282
 ,,,,,,,,,,,,,,
-Js,,,,,,,,,,,,,,
+JavaScript,,,,,,,,,,,,,,
 Volume,dynamic_list,dynamic_queue,dynamic_stack,static_list,static_queue,static_stack,,Volume,dynamic_list,dynamic_queue,dynamic_stack,static_list,static_queue,static_stack
 100,0.001401,0.001551,0.001260,0.001199,0.001217,0.001126,,100,40263,40297,40294,40307,40292,40296
 1K,0.009048,0.008978,0.009042,0.009029,0.007611,0.008738,,1K,46540,46449,46499,46365,46363,46371

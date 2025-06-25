@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# Dados
 dados = pd.DataFrame({
     "Volume": [100, 1_000, 10_000, 100_000, 1_000_000] * 4,
     "Tempo (s)": (
@@ -11,25 +12,48 @@ dados = pd.DataFrame({
         [0.000188, 0.003278, 0.034563, 0.370120, 4.715385]
     ),
     "Cenário": (
-        ["Static | alta desordem"]*5 +
-        ["Dynamic | alta desordem"]*5 +
-        ["Static | baixa desordem"]*5 +
-        ["Dynamic | baixa desordem"]*5
+        ["GRA-Static"]*5 +
+        ["GRA-Dynamic"]*5 +
+        ["GRB-Static"]*5 +
+        ["GRB-Dynamic"]*5
     )
 })
 
-sns.set_theme(style="dark")
-plt.figure(figsize=(10,6))
-sns.lineplot(data=dados, x="Volume", y="Tempo (s)", hue="Cenário", marker="o")
-plt.xscale('log')
-plt.yscale('log')
-plt.title('Comparativo entre inputs')
-plt.xlabel('Volume de Dados')
-plt.ylabel('Tempo (s)')
+# Configurações globais
+sns.set_theme(style="white")
+plt.rcParams.update({'font.size': 14})
 
-# Só grid principal, sem riscos finos
-plt.grid(True, which='major')
+# Plot
+plt.figure(figsize=(10, 6))
+ax = sns.lineplot(
+    data=dados,
+    x="Volume",
+    y="Tempo (s)",
+    hue="Cenário",
+    style="Cenário",
+    markers=['o', 's', 'D', '^'],  # um símbolo para cada linha
+    dashes=False
+)
+
+# Escalas log
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.set_ylabel('Tempo (s)')
+ax.set_xlabel('')
+
+# Remover bordas superior e direita
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+# Legenda limpa
+leg = ax.legend(frameon=False, title='')
+
+# Ticks x sem rotação
+ax.tick_params(axis='x', rotation=0)
+
+# Sem grade
+ax.grid(False)
 
 plt.tight_layout()
-plt.savefig('tempo_comparacao_seaborn.png')
-plt.show()
+plt.savefig('time/diferent_inputs.png', dpi=600)
+plt.close()

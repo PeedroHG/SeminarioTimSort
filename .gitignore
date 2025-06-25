@@ -1,6 +1,7 @@
 Samples/
 SamplesPartialOrdened/
 PreProcess/venv
+PreProcess/ratings.csv
 C/ordened
 Cpp/ordened
 Java/ordened
