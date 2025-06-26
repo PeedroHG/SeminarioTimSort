@@ -22,8 +22,6 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 | 100K            | 0.088463           | 98944                      |
 | 1M              | 0.796932           | 232669                     |
 
-
-
 ### **dynamic_stack**
 | Volume de Dados | Tempo Total (s) | Memória Máxima (kbytes) |
 |-----------------|-----------------|------------------------|

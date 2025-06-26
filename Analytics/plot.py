@@ -103,7 +103,9 @@ def plotar_memoria_por_estrutura_e_volume(df_memoria: pd.DataFrame, volume: str)
     plt.rcParams.update({'font.size': 14})
 
     df_filtro = df_memoria[df_memoria['Volume'] == volume].copy()
-    df_filtro[estruturas] = df_filtro[estruturas].apply(pd.to_numeric, errors='coerce')
+    df_filtro[estruturas] = df_filtro[estruturas].apply(
+        pd.to_numeric, errors='coerce'
+    ) / 1024.0
     df_filtro['total_mem'] = df_filtro[estruturas].sum(axis=1)
     ordem_linguagens = df_filtro.sort_values('total_mem')['Linguagem'].unique()
 
@@ -273,6 +275,10 @@ def plotar_todas_memorias_aglomerado(df_memoria: pd.DataFrame):
 
         df_filtro = df_memoria[df_memoria['Volume'] == volume].copy()
         df_filtro[estruturas] = df_filtro[estruturas].apply(pd.to_numeric, errors='coerce')
+        df_filtro[estruturas] = df_filtro[estruturas].apply(
+            pd.to_numeric, errors='coerce'
+        ) / 1024.0
+
         df_filtro['total_mem'] = df_filtro[estruturas].sum(axis=1)
         ordem_linguagens = df_filtro.sort_values('total_mem')['Linguagem'].unique()
 
@@ -374,7 +380,7 @@ def plotar_memoria_static_list_10k(df_consumo: pd.DataFrame):
     df_filtro = df_consumo[df_consumo['Volume'] == "10K"].copy()
 
     # Converter a coluna static_list para numérica (é inteiro, não precisa multiplicar)
-    df_filtro['static_list'] = pd.to_numeric(df_filtro['static_list'], errors='coerce')
+    df_filtro['static_list'] = pd.to_numeric(df_filtro['static_list'], errors='coerce') / 1024.0
 
     # Ordenar para barras em ordem decrescente (de cima para baixo)
     df_filtro = df_filtro.sort_values('static_list', ascending=False)
@@ -398,7 +404,7 @@ def plotar_memoria_static_list_10k(df_consumo: pd.DataFrame):
     )
 
     ax.set_xlabel('')
-    ax.set_ylabel('Memória (bytes)')
+    ax.set_ylabel('Memória (MB)')
     ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=10))
 
     ax.spines['top'].set_visible(False)
