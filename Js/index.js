@@ -24,7 +24,7 @@ function lerTimestampsCSV(nomeArquivo) {
 
 async function main() {
   const inputPath = path.join('..', 'Samples', `sample_${tam}.csv`);
-  const outputDir = path.join('.', 'ordened', 'dynamic_stack');
+  const outputDir = path.join('.', 'ordened', 'dynamic_queue');
   const outputPath = path.join(outputDir, `sample_${tam}.csv`);
 
   if (!fs.existsSync(outputDir)) {
@@ -34,26 +34,26 @@ async function main() {
   // Lê CSV
   const timestamps = lerTimestampsCSV(inputPath);
 
-  const linkedStack = new LinkedStack();
+  const linkedQueue = new LinkedQueue();
 
   // Começa a contar tempo
   const start = process.hrtime.bigint();
 
   // Passa pra estrutura
   for (const t of timestamps) {
-    linkedStack.push(t);
+    linkedQueue.enqueue(t);
   }
 
   // Transforma em array normal
-  const normalList = linkedStack.toList();
+  const normalList = linkedQueue.toList();
 
   // Ordena
   timsort(normalList);
 
   // Limpa estrutura e copia ordenado
-  linkedStack.clear();
+  linkedQueue.clear();
   for (const t of normalList) {
-    linkedStack.push(t);
+    linkedQueue.enqueue(t);
   }
 
   // Termina de contar tempo
@@ -63,7 +63,7 @@ async function main() {
   console.log(`Tempo de execução: ${tempoExecucao.toFixed(6)} segundos`);
 
   // Salva resultado em CSV
-  linkedStack.saveToCSV(outputPath);
+  linkedQueue.saveToCSV(outputPath);
 }
 
 main().catch(console.error);

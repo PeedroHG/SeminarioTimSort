@@ -7,12 +7,12 @@
 #include <iomanip>
 
 #define INPUT_FILE "../Samples/sample_1000000.csv"
-#define OUTPUT_FILE "./ordened/dynamic_stack/sample_1000000.csv"
+#define OUTPUT_FILE "./ordened/dynamic_queue/sample_1000000.csv"
 #define TAMANHO 1000000
 
 int main()
 {
-    DynamicStack pilha;
+    DynamicQueue fila;
 
     std::vector<int> arr;
     if (!FileReader::carregarCSV(INPUT_FILE, arr, TAMANHO))
@@ -25,15 +25,15 @@ int main()
 
     for (int i = 0; i < TAMANHO; i++)
     {
-        pilha.empilhar(Registro{arr[i]});
+        fila.enfileirar(Registro{arr[i]});
     }
 
-    ordenarDynamicStack(&pilha);
+    ordenarDynamicQueue(&fila);
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(stop - start);
     std::cout << "Tempo de execução: " << std::fixed << std::setprecision(6) << duration.count() << " segundos" << std::endl;
 
-    pilha.salvarEmArquivo(OUTPUT_FILE);
+    fila.salvarEmArquivo(OUTPUT_FILE);
     return 0;
 }

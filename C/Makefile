@@ -1,40 +1,32 @@
+# Diretórios
+SRC_DIR = src
+OBJ_DIR = obj
+
+# Arquivos
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+EXEC = main
+
+# Compilador e flags
 CC = gcc
-CFLAGS = -I src -Wall -Wextra -O2
+CFLAGS = -Wall -O2
 
-# Fontes principais compartilhadas
-SRCS = src/dynamic_list.c src/dynamic_stack.c src/dynamic_queue.c src/static_list.c src/static_queue.c src/static_stack.c src/file_reader.c src/tim_sort.c
+# Regra padrão
+all: $(EXEC)
 
-# Alvos disponíveis
-TARGETS = dynamic_list_ts dynamic_stack_ts dynamic_queue_ts static_list_ts static_queue_ts static_stack_ts
-
-# Regras principais
-all: $(TARGETS)
-
-dynamic_list_ts: src/dynamic_list_ts.c $(SRCS)
+# Linkagem final
+$(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-dynamic_stack_ts: src/dynamic_stack_ts.c $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $^
+# Compilação dos .c em .o
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-dynamic_queue_ts: src/dynamic_queue_ts.c $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $^
+# Executar o programa
+run: $(EXEC)
+	./$(EXEC)
 
-static_list_ts: src/static_list_ts.c $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-static_queue_ts: src/static_queue_ts.c $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-static_stack_ts: src/static_stack_ts.c $(SRCS)
-	$(CC) $(CFLAGS) -o $@ $^
-
-# Alvos específicos
-stack: dynamic_stack_ts static_stack_ts
-queue: dynamic_queue_ts static_queue_ts
-list: dynamic_list_ts static_list_ts
-
-# Limpar binários
+# Limpar os arquivos compilados
 clean:
-	rm -f $(TARGETS) *.o
-
-.PHONY: all clean stack queue list
+	rm -rf $(OBJ_DIR) $(EXEC)

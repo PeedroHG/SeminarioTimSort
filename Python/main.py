@@ -4,7 +4,7 @@ from array_based import *
 from linked_based import *
 from timsort import *
 
-tam = 100
+tam = 1000000
 
 def ler_timestamps_csv(nome_arquivo):
     timestamps = []
@@ -13,31 +13,31 @@ def ler_timestamps_csv(nome_arquivo):
         next(leitor)  # Ignora o cabeçalho
         for linha in leitor:
             if linha:
-                timestamps.append(int(linha[0]))  # Supondo que o timestamp está na primeira coluna
+                timestamps.append(float(linha[0]))  # Supondo que o timestamp está na primeira coluna
     return timestamps
 
 # le o csv
-timestamps = ler_timestamps_csv('../SamplesPartialOrdened/sample_'+ str(tam) + '.csv')
+timestamps = ler_timestamps_csv('../Samples/sample_'+ str(tam) + '.csv')
 
-array_list = ArrayList()
+arr_stack = ArrayStack()
 
 # COMEÇA A CONTAR O TEMPO AQUI
 start = time.perf_counter()
 
 # passa pra estrutura
 for t in timestamps:
-    array_list.append(t)
+    arr_stack.push(t)
 
 # transforma em array normal
-normal_list = array_list.to_list()
+normal_list = arr_stack.to_list()
 
 # ordena
-timsort(normal_list)
+TimSort(normal_list).sort()
 
 # limpa a estrutura e copia ordenado
-array_list.clear()
+arr_stack.clear()
 for t in normal_list:
-    array_list.append(t)
+    arr_stack.push(t)
 
 # TERMINA DE CONTAR O TEMPO AQUI
 end = time.perf_counter()
@@ -47,4 +47,4 @@ tempo_execucao = end - start
 print(f"Tempo de execução: {tempo_execucao:.6f} segundos")
 
 # salva o resultado num CSV
-array_list.save_to_csv('./ordened/dynamic_stack/sample_' + str(tam) + '.csv')
+arr_stack.save_to_csv('./ordened/static_stack/sample_' + str(tam) + '.csv')

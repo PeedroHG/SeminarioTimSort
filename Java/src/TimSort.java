@@ -1,7 +1,17 @@
+import java.util.*;
 
 public class TimSort {
 
-    private static final int RUN = 32;
+    private static final int MIN_MERGE = 32;
+
+    private static int calcMinRun(int n) {
+        int r = 0;
+        while (n >= MIN_MERGE) {
+            r |= (n & 1);
+            n >>= 1;
+        }
+        return n + r;
+    }
 
     private static void insertionSort(int[] arr, int left, int right) {
         for (int i = left + 1; i <= right; i++) {
@@ -15,53 +25,109 @@ public class TimSort {
         }
     }
 
-    private static void merge(int[] arr, int l, int m, int r) {
-        int len1 = m - l + 1, len2 = r - m;
-        int[] left = new int[len1];
-        int[] right = new int[len2];
+    private static void merge(int[] arr, int start, int mid, int end) {
+        int[] left = Arrays.copyOfRange(arr, start, mid + 1);
+        int[] right = Arrays.copyOfRange(arr, mid + 1, end + 1);
 
-        for (int i = 0; i < len1; i++) {
-            left[i] = arr[l + i];
-        }
-        for (int i = 0; i < len2; i++) {
-            right[i] = arr[m + 1 + i];
-        }
-
-        int i = 0, j = 0, k = l;
-
-        while (i < len1 && j < len2) {
+        int i = 0, j = 0, k = start;
+        while (i < left.length && j < right.length) {
             if (left[i] <= right[j]) {
                 arr[k++] = left[i++];
             } else {
                 arr[k++] = right[j++];
             }
         }
+        while (i < left.length) arr[k++] = left[i++];
+        while (j < right.length) arr[k++] = right[j++];
+    }
 
-        while (i < len1) {
-            arr[k++] = left[i++];
-        }
-        while (j < len2) {
-            arr[k++] = right[j++];
+    private static void reverse(int[] arr, int start, int end) {
+        while (start < end) {
+            int temp = arr[start];
+            arr[start++] = arr[end];
+            arr[end--] = temp;
         }
     }
 
     public static void timsort(int[] arr, int n) {
-        for (int i = 0; i < n; i += RUN) {
-            int right = Math.min((i + RUN - 1), (n - 1));
-            insertionSort(arr, i, right);
+        int minRun = calcMinRun(n);
+        Stack<int[]> runs = new Stack<>();
+
+        int i = 0;
+        while (i < n) {
+            int runStart = i;
+            int runEnd = i + 1;
+
+            if (runEnd == n) {
+                runEnd = n;
+            } else if (arr[runStart] <= arr[runEnd]) {
+                while (runEnd < n - 1 && arr[runEnd] <= arr[runEnd + 1]) runEnd++;
+            } else {
+                while (runEnd < n - 1 && arr[runEnd] > arr[runEnd + 1]) runEnd++;
+                reverse(arr, runStart, runEnd);
+            }
+
+            int runLen = runEnd - runStart + 1;
+            if (runLen < minRun) {
+                int forcedEnd = Math.min(n - 1, runStart + minRun - 1);
+                insertionSort(arr, runStart, forcedEnd);
+                runEnd = forcedEnd;
+                runLen = runEnd - runStart + 1;
+            }
+
+            runs.push(new int[]{runStart, runLen});
+            mergeCollapse(arr, runs);
+            i = runEnd + 1;
         }
 
-        for (int size = RUN; size < n; size = 2 * size) {
-            for (int left = 0; left < n; left += 2 * size) {
-                int mid = left + size - 1;
-                int right = Math.min((left + 2 * size - 1), (n - 1));
+        mergeForceCollapse(arr, runs);
+    }
 
-                if (mid < right) {
-                    merge(arr, left, mid, right);
+    private static void mergeCollapse(int[] arr, Stack<int[]> runs) {
+        while (runs.size() > 1) {
+            int n = runs.size();
+            int[] A = (n >= 3) ? runs.get(n - 3) : null;
+            int[] B = runs.get(n - 2);
+            int[] C = runs.get(n - 1);
+
+            boolean condition1 = (A != null && A[1] <= B[1] + C[1]);
+            boolean condition2 = (B[1] <= C[1]);
+
+            if (condition1) {
+                if (A[1] < C[1]) {
+                    mergeAt(arr, runs, n - 3);
+                } else {
+                    mergeAt(arr, runs, n - 2);
                 }
+            } else if (condition2) {
+                mergeAt(arr, runs, n - 2);
+            } else {
+                break;
             }
         }
     }
+
+    private static void mergeForceCollapse(int[] arr, Stack<int[]> runs) {
+        while (runs.size() > 1) {
+            int n = runs.size();
+            mergeAt(arr, runs, n - 2);
+        }
+    }
+
+    private static void mergeAt(int[] arr, Stack<int[]> runs, int i) {
+        int[] run1 = runs.get(i);
+        int[] run2 = runs.get(i + 1);
+
+        int start1 = run1[0], len1 = run1[1];
+        int start2 = run2[0], len2 = run2[1];
+
+        merge(arr, start1, start1 + len1 - 1, start2 + len2 - 1);
+
+        runs.set(i, new int[]{start1, len1 + len2});
+        runs.remove(i + 1);
+    }
+
+    // ======== Métodos de ordenação para suas estruturas ========
 
     public void ordenarStaticList(StaticList l) {
         if (l.tamanho > 1) {
