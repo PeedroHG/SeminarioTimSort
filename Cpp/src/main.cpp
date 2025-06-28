@@ -7,12 +7,12 @@
 #include <iomanip>
 
 #define INPUT_FILE "../Samples/sample_1000000.csv"
-#define OUTPUT_FILE "./ordened/dynamic_queue/sample_1000000.csv"
+#define OUTPUT_FILE "./ordened/static_list/sample_1000000.csv"
 #define TAMANHO 1000000
 
 int main()
 {
-    DynamicQueue fila;
+    StaticList lista;
 
     std::vector<int> arr;
     if (!FileReader::carregarCSV(INPUT_FILE, arr, TAMANHO))
@@ -25,15 +25,15 @@ int main()
 
     for (int i = 0; i < TAMANHO; i++)
     {
-        fila.enfileirar(Registro{arr[i]});
+        lista.inserirFinal(Registro{arr[i]});
     }
 
-    ordenarDynamicQueue(&fila);
+    ordenarStaticList(&lista);
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(stop - start);
     std::cout << "Tempo de execução: " << std::fixed << std::setprecision(6) << duration.count() << " segundos" << std::endl;
 
-    fila.salvarEmArquivo(OUTPUT_FILE);
+    lista.salvarEmArquivo(OUTPUT_FILE);
     return 0;
 }

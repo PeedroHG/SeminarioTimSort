@@ -27,11 +27,11 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 ### **dynamic_stack**
 | Volume de Dados | Tempo Total (s) | Memória Máxima (kbytes) |
 |-----------------|-----------------|------------------------|
-| 100             | 00000000        | 00000                  |
-| 1K              | 00000000        | 00000                  |
-| 10K             | 00000000        | 00000                  |
-| 100K            | 00000000        | 00000                  |
-| 1M              | 00000000        | 00000                  |
+| 100             | 0.000860         | 40192                   |
+| 1K              | 0.003411         | 44876                   |
+| 10K             | 0.012453         | 49248                   |
+| 100K            | 0.062395         | 93248                   |
+| 1M              | 0.626259         | 215037                   |
 
 ## Estruturas Staticas
 
@@ -49,13 +49,13 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 | Volume de Dados | Tempo Total (s) | Memória Máxima (kbytes) |
 |-----------------|-----------------|------------------------|
 | 100             | 0.000765         | 40166                   |
-| 1K              | 0.004085         | 44153                   |
+| 1K              | 0.003285         | 44153                   |
 | 10K             | 0.010275         | 48877                   |
 | 100K            | 0.051220         | 79064                   |
 | 1M              | 0.390635         | 194914                   |
 
 
-### **static_queue**
+### **static_stack**
 | Volume de Dados | Tempo Total (s) | Memória Máxima (kbytes) |
 |-----------------|-----------------|------------------------|
 | 100             | 0.001047         | 40150                   |

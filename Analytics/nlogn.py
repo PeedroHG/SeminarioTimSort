@@ -4,7 +4,7 @@ import seaborn as sns
 
 # Dados
 n = np.array([100, 1_000, 10_000, 100_000, 1_000_000])
-tempo = np.array([0.000004, 0.000055, 0.000654, 0.006817, 0.082311])
+tempo = np.array([0.000006, 0.000060, 0.000614, 0.008886, 0.063661])
 
 # Calculando n * log2(n)
 nlogn = n * np.log2(n)

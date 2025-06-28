@@ -17,9 +17,9 @@ Este documento apresenta os resultados obtidos durante a execução do método p
 | Volume de Dados | Tempo Total (s) | Memória Máxima (kbytes) |
 |-----------------|-----------------|------------------------|
 | 100             | 0.000329         | 10995                   |
-| 1K              | 0.003988         | 11136                   |
+| 1K              | 0.004388         | 11136                   |
 | 10K             | 0.036245         | 12282                   |
-| 100K            | 0,586000         | 24280                   |
+| 100K            | 0,366000         | 24280                   |
 | 1M              | 5,006197         | 144068                   |
 
 

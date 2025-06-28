@@ -322,48 +322,6 @@ def plotar_todas_memorias_aglomerado(df_memoria: pd.DataFrame):
     plt.savefig('memory/todos_volumes_memoria_aglomerado.png', dpi=600)
     plt.close()
 
-def plotar_tempo_static_list_10k(df_tempos: pd.DataFrame):
-    # Configurações globais
-    sns.set_theme(style="white")
-    plt.rcParams.update({'font.size': 14})
-
-    # Filtro apenas para volume = "10K"
-    df_filtro = df_tempos[df_tempos['Volume'] == "10K"].copy()
-
-    # Converter a coluna static_list para numérica e em ms
-    df_filtro['static_list'] = pd.to_numeric(df_filtro['static_list'], errors='coerce') * 1000
-
-    # Ordenar por tempo (caso queira que as barras fiquem em ordem crescente)
-    df_filtro = df_filtro.sort_values('static_list', ascending=False)
-
-    cores_map = {
-        'C': '#A6C8FF',       # Azul claro vibrante
-        'C++': '#6699FF',     # Azul médio claro
-        'Java': '#3366FF',    # Azul vibrante
-        'Python': '#0047AB',  # Azul forte
-        'JavaScript': '#002F6C' # Azul escuro profundo
-    }
-    # Plot
-    plt.figure(figsize=(8, 5))
-    ax = sns.barplot(
-        data=df_filtro,
-        hue='Linguagem',
-        x='Linguagem',
-        y='static_list',
-        palette=cores_map  # mesma cor que você usou antes para static_list
-    )
-
-    ax.set_xlabel('')
-    ax.set_ylabel('Tempo (ms)')
-    ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=10))
-
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-
-    # Salvar imagem em alta resolução
-    plt.tight_layout()
-    plt.savefig('time/grafico_static_list_10K.png', dpi=600)
-    plt.close()
 
 def plotar_memoria_static_list_10k(df_consumo: pd.DataFrame):
     # Configurações globais
@@ -374,17 +332,17 @@ def plotar_memoria_static_list_10k(df_consumo: pd.DataFrame):
     df_filtro = df_consumo[df_consumo['Volume'] == "10K"].copy()
 
     # Converter a coluna static_list para numérica (é inteiro, não precisa multiplicar)
-    df_filtro['static_list'] = pd.to_numeric(df_filtro['static_list'], errors='coerce')
+    df_filtro['static_list'] = pd.to_numeric(df_filtro['static_list'], errors='coerce') / 1024.0
 
     # Ordenar para barras em ordem decrescente (de cima para baixo)
     df_filtro = df_filtro.sort_values('static_list', ascending=False)
 
     cores_map = {
-        'C': '#FFBA08',        # Amarelo-laranja quente (mais claro)
-        'C++': '#FFA41B',      # Laranja forte
-        'Java': '#F77F00',     # Laranja vibrante
-        'Python': '#F06543',   # Laranja avermelhado forte
-        'JavaScript': '#E63946' # Vermelho-alaranjado vivo (mais escuro)
+        'C': '#f1c40f',        
+        'C++': '#f75c03',      
+        'Java': '#00CC66',    
+        'Python': '#D90368',   
+        'JavaScript': '#2274a5' 
     }
     
     # Plot
@@ -398,7 +356,7 @@ def plotar_memoria_static_list_10k(df_consumo: pd.DataFrame):
     )
 
     ax.set_xlabel('')
-    ax.set_ylabel('Memória (bytes)')
+    ax.set_ylabel('Memória (MB)')
     ax.yaxis.set_major_locator(ticker.MaxNLocator(nbins=10))
 
     ax.spines['top'].set_visible(False)
